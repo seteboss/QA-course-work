@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.pages.AccountPage;
+import org.example.pages.CatalogPage;
 import org.example.pages.LoginPage;
 import org.example.util.ConfProperties;
 import org.junit.AfterClass;
@@ -17,6 +18,7 @@ public class UITests {
     public static WebDriver webDriver;
     public static LoginPage loginPage;
     public static AccountPage accountPage;
+    public static CatalogPage catalogPage;
 
 
     @BeforeClass
@@ -48,8 +50,25 @@ public class UITests {
 
     }
 
+    @Test
+    public void case2StepInCatalog(){
+
+        webDriver.get(ConfProperties.getProperty("bmwcatalogpage"));
+
+        catalogPage.clickSortMenu();
+
+        catalogPage.clickRatingSort();
+
+        String productName = catalogPage.getProductName();
+
+        Assert.assertEquals(productName, "Кроссовки BMW MMS RS-2K");
+    }
+
+
+
     @AfterClass
     public static void tearDown() {
+        catalogPage.clickAccountBtn();
         accountPage.exit();
         webDriver.quit();
     }
