@@ -22,20 +22,20 @@ public class ProductPage extends NavBar {
     @FindBy(xpath = "//*[@id=\"product-40669\"]/div[2]/form/table/tbody/tr[2]/td[2]/ul/li[6]/span")
     WebElement productSize;
 
-    @FindBy(xpath = "//*[contains(@class, 'single_add_to_cart_button button alt')]")
-    WebElement basketBtn;
-
-
-    public void clickBasketBtn(){
-        basketBtn.click();
-    }
+    @FindBy(xpath = "//*[@id=\"product-40669\"]/div[2]/form/div/div[2]/button")
+    WebElement saveProductInBasket;
 
     public void clickProductSize(){
         productSize.click();
     }
 
+    public void clickSaveProductInBasket(){
+        saveProductInBasket.click();
+    }
+
     public String getProductName(){
         return productName.getText();
     }
+
 
 }

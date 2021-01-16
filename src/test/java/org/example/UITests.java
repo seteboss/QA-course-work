@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.pages.AccountPage;
-import org.example.pages.CatalogPage;
-import org.example.pages.LoginPage;
-import org.example.pages.ProductPage;
+import org.example.pages.*;
 import org.example.util.ConfProperties;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
@@ -20,6 +17,7 @@ public class UITests {
     public static AccountPage accountPage;
     public static CatalogPage catalogPage;
     public static ProductPage productPage;
+    public static BasketPage basketPage;
 
 
     @BeforeClass
@@ -30,6 +28,7 @@ public class UITests {
         accountPage = new AccountPage(webDriver);
         catalogPage = new CatalogPage(webDriver);
         productPage = new ProductPage(webDriver);
+        basketPage = new BasketPage(webDriver);
         webDriver.manage().window().maximize();
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         webDriver.get(ConfProperties.getProperty("loginpage"));
@@ -61,9 +60,21 @@ public class UITests {
         Assert.assertEquals(productName, "Кроссовки BMW MMS RS-2K");
     }
 
+
+    @Test
+    public void case4CheckProductInBasket() {
+        productPage.clickProductSize();
+        productPage.clickSaveProductInBasket();
+        productPage.clickBasketBtn();
+        String productName = basketPage.getFullProductName();
+        Assert.assertEquals(productName, "Кроссовки BMW MMS RS-2K - Puma Black-High Risk Red, 9.5 (44)");
+        basketPage.clickDeleteProductBtn();
+    }
+
+
     @AfterClass
     public static void tearDown() {
-        productPage.clickAccountBtn();
+        basketPage.clickAccountBtn();
         accountPage.exit();
         webDriver.quit();
     }
